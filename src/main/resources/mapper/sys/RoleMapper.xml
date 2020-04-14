@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tgem.ynnk.sys.dao.RoleMapper">
+    <insert id="insPersByRoleId">
+        insert into sys_role_permission values(#{roleId},#{perId});
+    </insert>
+    <delete id="delPersByRoleId">
+        delete from sys_role_permission where role_id = #{roleId};
+    </delete>
+
+    <select id="findByUserId" resultType="com.tgem.ynnk.sys.entity.Role">
+        select * from role r left join sys_user_role s on r.id = s.role_id
+                             left join `user` u on s.user_id = u.id
+        where u.id = #{userId};
+    </select>
+
+    <select id="findPermissionByRoleId" resultType="com.tgem.ynnk.sys.entity.Permission">
+        select * from permission p left join sys_role_permission s on p.id = s.permission_id
+                                   left join role r on s.role_id = r.id
+        where r.id = #{roleId};
+    </select>
+    <select id="findPermissionIdsByRoleId" resultType="java.lang.String">
+         select permission_id from sys_role_permission where role_id = #{roleId}
+    </select>
+</mapper>

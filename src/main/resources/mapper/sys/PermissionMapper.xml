@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tgem.ynnk.sys.dao.PermissionMapper">
+
+    <select id="findByRoleId" resultType="com.tgem.ynnk.sys.entity.Permission">
+        select * from permission p left join sys_role_permission s on p.id = s.permission_id
+                                    left join role r on s.role_id = r.id
+        where r.id = #{role_id}
+    </select>
+</mapper>
